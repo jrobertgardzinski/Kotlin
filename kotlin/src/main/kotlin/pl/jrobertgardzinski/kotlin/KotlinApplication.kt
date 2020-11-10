@@ -3,6 +3,7 @@ package pl.jrobertgardzinski.kotlin
 import org.apache.commons.csv.CSVFormat
 import org.apache.commons.csv.CSVParser
 import org.apache.commons.csv.CSVPrinter
+import org.bson.types.Decimal128
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 import pl.jrobertgardzinski.kotlin.csv.model.AccountType
@@ -41,6 +42,8 @@ class KotlinApplication(
 	}
 
 	private fun loadAndSaveAccountTypes() {
+
+
 		val accountTypeEntities = mutableListOf<AccountType>()
 		val reader = getResourceAsInputStream("/static/accountypes.csv")
 		val csvParser = CSVParser(reader, CSVFormat.DEFAULT
@@ -93,9 +96,9 @@ class KotlinApplication(
 				continue
 			}
 			val transactionId = csvRecord.get("transaction_id").toInt()
-			val transactionAmount = csvRecord.get("transaction_amount").replace(",", ".").toBigDecimal()
-			val accountType = csvRecord.get("account_type").toInt()
-			val customerId = csvRecord.get("customer_id").toInt()
+			val transactionAmount = Decimal128.parse(csvRecord.get("transaction_amount").replace(",", "."))
+			val accountType = accountTypeRepository.findById(csvRecord.get("account_type").toInt()).get()
+			val customerId = customerRepository.findById(csvRecord.get("customer_id").toInt()).get()
 			val dateString = csvRecord.get("transaction_date")
 			val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
 			val transactionDate = LocalDateTime.parse(dateString, formatter)
