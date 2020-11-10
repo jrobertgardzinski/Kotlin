@@ -1,9 +1,12 @@
 package pl.jrobertgardzinski.kotlin.csv.model
 
+import java.math.BigDecimal
+import java.time.LocalDateTime
+
 data class Transaction (
-        val transaction_id: Int,
-        val transaction_amount: String,
-        val account_type: Int,
-        val customer_id: Int,
-        val transaction_date: String
+        val transactionId: Int,
+        val transactionAmount: BigDecimal,
+        val accountType: Int,
+        val customerId: Int,
+        val transactionDate: LocalDateTime
 )

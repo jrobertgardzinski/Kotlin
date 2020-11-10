@@ -1,8 +1,10 @@
 package pl.jrobertgardzinski.kotlin.csv.model
 
+import java.math.BigDecimal
+
 data class Customer (
         val id: Int,
-        val first_name: String,
-        val last_name: String,
-        val last_login_balance: String
+        val firstName: String,
+        val lastName: String,
+        val lastLoginBalance: BigDecimal
 )

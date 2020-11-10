@@ -1,6 +1,7 @@
 package pl.jrobertgardzinski.kotlin.csv.model
 
+@ExperimentalStdlibApi
 data class AccountType (
-        val account_type: Int,
+        val accountType: Int,
         val name: String
 )

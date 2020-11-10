@@ -20,13 +20,10 @@ configurations {
 
 repositories {
 	mavenCentral()
-	jcenter()
 }
 
 dependencies {
-    implementation("com.vhl.blackmo:kotlin-grass-jvm:0.4.1")
-    implementation("com.github.doyaaaaaken:kotlin-csv-jvm:0.11.0")
-
+	implementation("org.apache.commons:commons-csv:1.8")
 
 	//implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
