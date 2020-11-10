@@ -1,4 +1,5 @@
 transaction_id,transaction_amount,account_type,customer_id,transaction_date
+,,,,
 777,"243,33",1,1,2013-08-04 23:57:38
 778,"199,11",3,2,2013-07-12 13:27:18
 779,"33,11",4,1,2013-07-16 21:17:28

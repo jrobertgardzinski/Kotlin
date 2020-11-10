@@ -49,6 +49,9 @@ class KotlinApplication(
 				.withIgnoreHeaderCase()
 				.withTrim())
 		for (csvRecord in csvParser) {
+			if (csvRecord.all { it.isEmpty() }) {
+				continue
+			}
 			val accountType = csvRecord.get("account_type").toInt()
 			val name = csvRecord.get("name")
 			accountTypeEntities.add(AccountType(accountType, name))
@@ -65,6 +68,9 @@ class KotlinApplication(
 				.withIgnoreHeaderCase()
 				.withTrim())
 		for (csvRecord in csvParser) {
+			if (csvRecord.all { it.isEmpty() }) {
+				continue
+			}
 			val id = csvRecord.get("id").toInt()
 			val firstName = csvRecord.get("first_name")
 			val lastName = csvRecord.get("last_name")
@@ -83,6 +89,9 @@ class KotlinApplication(
 				.withIgnoreHeaderCase()
 				.withTrim())
 		for (csvRecord in csvParser) {
+			if (csvRecord.all { it.isEmpty() }) {
+				continue
+			}
 			val transactionId = csvRecord.get("transaction_id").toInt()
 			val transactionAmount = csvRecord.get("transaction_amount").replace(",", ".").toBigDecimal()
 			val accountType = csvRecord.get("account_type").toInt()
