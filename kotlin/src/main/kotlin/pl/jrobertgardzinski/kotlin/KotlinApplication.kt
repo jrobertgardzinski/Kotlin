@@ -2,12 +2,15 @@ package pl.jrobertgardzinski.kotlin
 
 import org.apache.commons.csv.CSVFormat
 import org.apache.commons.csv.CSVParser
-import org.apache.commons.csv.CSVPrinter
 import org.bson.types.Decimal128
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 import org.springframework.context.support.beans
+import org.springframework.core.io.ClassPathResource
+import org.springframework.core.io.Resource
+import org.springframework.core.io.support.PropertiesLoaderUtils
 import org.springframework.security.core.userdetails.User
+import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.provisioning.InMemoryUserDetailsManager
 import pl.jrobertgardzinski.kotlin.csv.model.AccountType
 import pl.jrobertgardzinski.kotlin.csv.model.Customer
@@ -16,12 +19,10 @@ import pl.jrobertgardzinski.kotlin.repository.AccountTypeRepository
 import pl.jrobertgardzinski.kotlin.repository.CustomerRepository
 import pl.jrobertgardzinski.kotlin.repository.TransactionRepository
 import java.io.BufferedReader
-import java.io.InputStream
-import java.nio.file.Files
 import java.time.LocalDateTime
-import java.time.ZoneId
-import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
+import java.util.*
+
 
 @ExperimentalStdlibApi
 @SpringBootApplication
@@ -117,8 +118,15 @@ fun main(args: Array<String>) {
 	runApplication<KotlinApplication>(*args) {
 		addInitializers(beans {
 			bean {
-				fun user (user: String, password: String, vararg roles: String ) = User.withDefaultPasswordEncoder().username(user).password(password).roles(*roles).build()
-				InMemoryUserDetailsManager(user ("user", "password", "USER"))
+				fun propertyToUser ( property: Map.Entry<Any, Any> ) = User.withDefaultPasswordEncoder().username(property.key as String).password(property.value  as String).roles("USER").build()
+
+				val propertiesFile: Resource = ClassPathResource("users.properties")
+				val properties: Properties = PropertiesLoaderUtils.loadProperties(propertiesFile)
+				var users = mutableListOf<UserDetails>()
+				properties.forEach {
+					users.add( propertyToUser(it) )
+				}
+				InMemoryUserDetailsManager(users)
 			}
 		})
 	}
