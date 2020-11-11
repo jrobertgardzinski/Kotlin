@@ -1,5 +1,6 @@
 package pl.jrobertgardzinski.kotlin.service
 
+import org.springframework.data.mongodb.core.query.Query
 import org.springframework.stereotype.Service
 import pl.jrobertgardzinski.kotlin.VO.CustomerDetails
 import pl.jrobertgardzinski.kotlin.VO.TransactionDetails
@@ -15,31 +16,27 @@ import kotlin.reflect.full.memberProperties
 @Service
 @ExperimentalStdlibApi
 class TransactionsService constructor(
-        private val transactionRepository: TransactionRepository,
-        private val accountTypeRepository: AccountTypeRepository,
-        private val customerRepository: CustomerRepository
+        private val transactionRepository: TransactionRepository
 ) {
 
     fun findByAccountTypesAndCustomerIds(accountTypes: List<String>, customerIds: List<String>) : List<TransactionVO> {
-        val accountTypeEntities: List<AccountType> =
-            if (accountTypes.get(0).equals("ALL")) {
-                accountTypeRepository.findAll()
+        val forAllAccountTypes : Boolean = accountTypes.get(0).equals("ALL")
+        val forAllCustomerIds : Boolean = customerIds.get(0).equals("ALL")
+
+        var result =
+            if (forAllAccountTypes && forAllCustomerIds) {
+                transactionRepository.findAllByOrderByTransactionAmount()
+            }
+            else if (forAllAccountTypes) {
+                transactionRepository.findByCustomerIdInOrderByTransactionAmount(customerIds.map{ it.toInt() })
+            }
+            else if (forAllCustomerIds) {
+                transactionRepository.findByAccountTypeInOrderByTransactionAmount(accountTypes.map{ it.toInt() })
             }
             else {
-                val ids = accountTypes.map { it.toInt() }
-                accountTypeRepository.findAllById(ids).toList()
+                transactionRepository.findByAccountTypeInAndCustomerIdInOrderByTransactionAmount(accountTypes.map{ it.toInt() }, customerIds.map{ it.toInt() })
             }
 
-        val customerEntities: List<Customer> =
-                if (customerIds.get(0).equals("ALL")) {
-                    customerRepository.findAll()
-                }
-                else {
-                    val ids = customerIds.map { it.toInt() }
-                    customerRepository.findAllById(ids).toList()
-                }
-
-        var result: List<Transaction> = transactionRepository.findByAccountTypeInAndCustomerIdInOrderByTransactionAmount(accountTypeEntities, customerEntities)
         return result.map { it.toTransactionVO() }
     }
 
