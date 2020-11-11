@@ -4,9 +4,9 @@ import org.springframework.stereotype.Service
 import pl.jrobertgardzinski.kotlin.VO.CustomerDetails
 import pl.jrobertgardzinski.kotlin.VO.TransactionDetails
 import pl.jrobertgardzinski.kotlin.VO.TransactionVO
-import pl.jrobertgardzinski.kotlin.csv.model.AccountType
-import pl.jrobertgardzinski.kotlin.csv.model.Customer
-import pl.jrobertgardzinski.kotlin.csv.model.Transaction
+import pl.jrobertgardzinski.kotlin.model.AccountType
+import pl.jrobertgardzinski.kotlin.model.Customer
+import pl.jrobertgardzinski.kotlin.model.Transaction
 import pl.jrobertgardzinski.kotlin.repository.AccountTypeRepository
 import pl.jrobertgardzinski.kotlin.repository.CustomerRepository
 import pl.jrobertgardzinski.kotlin.repository.TransactionRepository

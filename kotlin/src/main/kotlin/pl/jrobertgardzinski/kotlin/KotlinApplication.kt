@@ -12,9 +12,9 @@ import org.springframework.core.io.support.PropertiesLoaderUtils
 import org.springframework.security.core.userdetails.User
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.provisioning.InMemoryUserDetailsManager
-import pl.jrobertgardzinski.kotlin.csv.model.AccountType
-import pl.jrobertgardzinski.kotlin.csv.model.Customer
-import pl.jrobertgardzinski.kotlin.csv.model.Transaction
+import pl.jrobertgardzinski.kotlin.model.AccountType
+import pl.jrobertgardzinski.kotlin.model.Customer
+import pl.jrobertgardzinski.kotlin.model.Transaction
 import pl.jrobertgardzinski.kotlin.repository.AccountTypeRepository
 import pl.jrobertgardzinski.kotlin.repository.CustomerRepository
 import pl.jrobertgardzinski.kotlin.repository.TransactionRepository

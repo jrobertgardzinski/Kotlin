@@ -1,4 +1,4 @@
-package pl.jrobertgardzinski.kotlin.csv.model
+package pl.jrobertgardzinski.kotlin.model
 
 import org.bson.types.Decimal128
 import org.springframework.data.annotation.Id
