@@ -6,6 +6,9 @@ import org.apache.commons.csv.CSVPrinter
 import org.bson.types.Decimal128
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
+import org.springframework.context.support.beans
+import org.springframework.security.core.userdetails.User
+import org.springframework.security.provisioning.InMemoryUserDetailsManager
 import pl.jrobertgardzinski.kotlin.csv.model.AccountType
 import pl.jrobertgardzinski.kotlin.csv.model.Customer
 import pl.jrobertgardzinski.kotlin.csv.model.Transaction
@@ -111,7 +114,14 @@ class KotlinApplication(
 
 @ExperimentalStdlibApi
 fun main(args: Array<String>) {
-	runApplication<KotlinApplication>(*args)
+	runApplication<KotlinApplication>(*args) {
+		addInitializers(beans {
+			bean {
+				fun user (user: String, password: String, vararg roles: String ) = User.withDefaultPasswordEncoder().username(user).password(password).roles(*roles).build()
+				InMemoryUserDetailsManager(user ("user", "password", "USER"))
+			}
+		})
+	}
 }
 
 fun getResourceAsInputStream(path: String): BufferedReader {
