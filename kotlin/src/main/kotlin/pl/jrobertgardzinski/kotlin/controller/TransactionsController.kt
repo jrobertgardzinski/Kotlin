@@ -12,7 +12,7 @@ class TransactionsController constructor(
 ) {
 
     @GetMapping("/transactions")
-    fun read(
+    fun find(
             @RequestParam(defaultValue = "ALL") account_type: List<String>,
             @RequestParam(defaultValue = "ALL") customer_id: List<String>
     ) = transactionsService.findByAccountTypesAndCustomerIds(account_type, customer_id)

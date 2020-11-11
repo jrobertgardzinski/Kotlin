@@ -37,6 +37,8 @@ dependencies {
 		exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
 	}
 	testImplementation("org.springframework.security:spring-security-test")
+	testImplementation("io.mockk:mockk:1.10.2"	)
+
 }
 
 tasks.withType<Test> {
